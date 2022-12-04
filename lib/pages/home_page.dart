@@ -171,7 +171,7 @@ Widget buildTextField(CurrencyNamesEnum currencyName, String prefix, TextEditing
     onChanged: (value) {
       onChange(value, currencyName);
     },
-    keyboardType: TextInputType.number,
+    keyboardType: const TextInputType.numberWithOptions(decimal: true),
     decoration: InputDecoration(
       labelText: '($prefix) ${currencyName.value}',
       prefixText: '$prefix ',
