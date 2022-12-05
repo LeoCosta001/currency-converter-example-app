@@ -183,7 +183,7 @@ Widget buildTextField(CurrencyNamesEnum currencyName, String prefix, TextEditing
     onChanged: (value) {
       onChange(value, currencyName);
     },
-    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+    keyboardType: const TextInputType.numberWithOptions(decimal: true), // Show decimal point in IOS keyboard
     decoration: InputDecoration(
       labelText: '($prefix) ${currencyName.value}',
       prefixText: '$prefix ',
