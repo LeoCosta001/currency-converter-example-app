@@ -103,8 +103,14 @@ class _HomeState extends State<Home> {
         FocusManager.instance.primaryFocus?.unfocus(); // Keyboard dismiss when click outside
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('\$ Currency Converter \$')),
-        backgroundColor: const Color(0xFF252526),
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            '\$ Currency Converter \$',
+            style: TextStyle(color: backgroundColor),
+          ),
+        ),
+        backgroundColor: backgroundColor,
         body: FutureBuilder(
           future: hgFinanceApiWebClient.getHgFinanceApi(),
           builder: (context, snapshot) {

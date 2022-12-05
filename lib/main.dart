@@ -2,6 +2,7 @@ import 'package:currency_converter/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 const Color mainColor = Color(0xFFEDA800);
+const Color backgroundColor = Color(0xFF252526);
 
 void main() {
   runApp(const MyApp());
