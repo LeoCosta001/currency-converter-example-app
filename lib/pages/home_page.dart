@@ -98,68 +98,74 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('\$ Currency Converter \$')),
-      backgroundColor: const Color(0xFF252526),
-      body: FutureBuilder(
-        future: hgFinanceApiWebClient.getHgFinanceApi(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return const Center(
-                child: Text(
-                  'Loading...',
-                  style: TextStyle(color: mainColor, fontSize: 24),
-                ),
-              );
-            default:
-              if (snapshot.hasError || snapshot.data == null) {
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.report_problem_rounded, size: 56),
-                      Text(
-                        'Loading failed :(',
-                        style: TextStyle(color: mainColor, fontSize: 24),
-                      ),
-                    ],
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus(); // Keyboard dismiss when click outside
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text('\$ Currency Converter \$')),
+        backgroundColor: const Color(0xFF252526),
+        body: FutureBuilder(
+          future: hgFinanceApiWebClient.getHgFinanceApi(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return const Center(
+                  child: Text(
+                    'Loading...',
+                    style: TextStyle(color: mainColor, fontSize: 24),
                   ),
                 );
-              } else {
-                // Get API quotations
-                dollarCurrentQuotation = snapshot.data!['results']['currencies']['USD']['buy'];
-                euroCurrentQuotation = snapshot.data!['results']['currencies']['EUR']['buy'];
-                argentinePesoCurrentQuotation = snapshot.data!['results']['currencies']['ARS']['buy'];
-                japaneseYenCurrentQuotation = snapshot.data!['results']['currencies']['JPY']['buy'];
-                bitcoinCurrentQuotation = snapshot.data!['results']['currencies']['BTC']['buy'];
+              default:
+                if (snapshot.hasError || snapshot.data == null) {
+                  return Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(Icons.report_problem_rounded, size: 56),
+                        Text(
+                          'Loading failed :(',
+                          style: TextStyle(color: mainColor, fontSize: 24),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  // Get API quotations
+                  dollarCurrentQuotation = snapshot.data!['results']['currencies']['USD']['buy'];
+                  euroCurrentQuotation = snapshot.data!['results']['currencies']['EUR']['buy'];
+                  argentinePesoCurrentQuotation = snapshot.data!['results']['currencies']['ARS']['buy'];
+                  japaneseYenCurrentQuotation = snapshot.data!['results']['currencies']['JPY']['buy'];
+                  bitcoinCurrentQuotation = snapshot.data!['results']['currencies']['BTC']['buy'];
 
-                // Render input list
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Icon(Icons.monetization_on, size: 120),
-                      const Divider(),
-                      buildTextField(CurrencyNamesEnum.real, 'R\$', realInputController, _convertCurrency),
-                      const Divider(),
-                      buildTextField(CurrencyNamesEnum.dollar, '\$', dollarInputController, _convertCurrency),
-                      const Divider(),
-                      buildTextField(CurrencyNamesEnum.euro, '€', euroInputController, _convertCurrency),
-                      const Divider(),
-                      buildTextField(CurrencyNamesEnum.japaneseYen, '¥', japaneseYenInputController, _convertCurrency),
-                      const Divider(),
-                      buildTextField(CurrencyNamesEnum.argentinePeso, '\$', argentinePesoInputController, _convertCurrency),
-                      const Divider(),
-                      buildTextField(CurrencyNamesEnum.bitcoin, '₿', bitcoinInputController, _convertCurrency),
-                    ],
-                  ),
-                );
-              }
-          }
-        },
+                  // Render input list
+                  return SingleChildScrollView(
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag, // Keyboard dismiss on drag
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Icon(Icons.monetization_on, size: 120),
+                        const Divider(),
+                        buildTextField(CurrencyNamesEnum.real, 'R\$', realInputController, _convertCurrency),
+                        const Divider(),
+                        buildTextField(CurrencyNamesEnum.dollar, '\$', dollarInputController, _convertCurrency),
+                        const Divider(),
+                        buildTextField(CurrencyNamesEnum.euro, '€', euroInputController, _convertCurrency),
+                        const Divider(),
+                        buildTextField(CurrencyNamesEnum.japaneseYen, '¥', japaneseYenInputController, _convertCurrency),
+                        const Divider(),
+                        buildTextField(CurrencyNamesEnum.argentinePeso, '\$', argentinePesoInputController, _convertCurrency),
+                        const Divider(),
+                        buildTextField(CurrencyNamesEnum.bitcoin, '₿', bitcoinInputController, _convertCurrency),
+                      ],
+                    ),
+                  );
+                }
+            }
+          },
+        ),
       ),
     );
   }
