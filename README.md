@@ -7,7 +7,7 @@ To learn:
 - Form validations.
 - Dismiss keyboard.
 - Manipulate multiple inputs.
-- API Request.
+- API Request using "http" lib.
 - Apply custom theme.
 
 ![App example](https://github.com/LeoCosta001/currency-converter-example-app/blob/main/app_example.png?raw=true)
